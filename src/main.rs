@@ -1,3 +1,9 @@
+// use crate::rayt::*;
+// 
+// mod rayt;
+// 
+// #![arrow(dead_code)]
+
 use std::{fs::File, io::prelude::*};
 
 struct Color ([f64; 3]);
