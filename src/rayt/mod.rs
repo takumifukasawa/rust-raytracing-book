@@ -12,6 +12,7 @@ mod quat;
 pub use self::float3::{Float3, Color, Vec3, Point3}
 
 pub use self::quat::Quat;
+pub use self::ray::Ray;
 
 pub use std::f64::consts::PI;
 pub use std::f64::consts::FRAC_1_PI;
