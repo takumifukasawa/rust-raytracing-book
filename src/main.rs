@@ -1,13 +1,13 @@
 
 mod rayt;
 
-mod code_001;
-mod code_002;
+mod code_101;
+mod code_102;
 
 fn run(id: &str) {
     match id {
-        "001" => code_001::run(),
-        "002" => code_002::run(),
+        "101" => code_101::run(),
+        "102" => code_102::run(),
         _ => println!("not found code_{}", id)
     }
 }
