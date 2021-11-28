@@ -22,24 +22,24 @@ impl Camera {
 
     pub fn from_lookat(origin: Vec3, lookat: Vec3, vup: Vec3, vfov: f64, aspect: f64) -> Self {
         /*
-         * 
+         *
          * bu,bv,bw は基底ベクトル
          * 横幅を2w,縦幅を2hとすると、中心から横幅の大きさはw,縦幅はh
          * bu = 2wx
          * bv = 2hy
-         * 
+         *
          * 基底ベクトルからスクリーン上の位置pは
          * p = bu * u + bv * v + bw
          *
          * bwについて解くと、
          * bw = p - bu * u - bv * v;
-         * 
+         *
          * oはカメラの位置
          * p = o - z;
          *
          * bw = o - z - bu * u - bv * v;
-         * bw = o - bu * u - bv * v - z; 
-         * 
+         * bw = o - bu * u - bv * v - z;
+         *
          * bw = o - w * x - h * y - z; <- ここの変換がまだよくわかってない
          */
         let halfh = (vfov.to_radians() * 0.5).tan();

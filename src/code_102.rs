@@ -2,8 +2,8 @@ extern crate image;
 extern crate rayon;
 
 use crate::rayt::*;
-use rayon::prelude::*;
 use image::{Rgb, RgbImage};
+use rayon::prelude::*;
 
 const IMAGE_WIDTH: u32 = 200;
 const IMAGE_HEIGHT: u32 = 100;
@@ -33,5 +33,5 @@ pub fn run() {
             pixel[1] = rgb[1];
             pixel[2] = rgb[2];
         });
-        img.save(String::from("render.png")).unwrap();
+    img.save(String::from("render.png")).unwrap();
 }
