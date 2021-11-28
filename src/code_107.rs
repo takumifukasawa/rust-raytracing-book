@@ -12,6 +12,7 @@ impl HitInfo {
     }
 }
 
+// Sync ... 複数スレッドから参照されても安全なことを意味する
 trait Shape: Sync {
     fn hit(&self, ray: &Ray, t0: f64, t1: f64) -> Option<HitInfo>;
 }
@@ -89,6 +90,10 @@ impl Shape for Sphere {
 }
 
 struct ShapeList {
+    /*
+     * Box<T>はヒープメモリに格納する
+     * dyn Trait は、トレイトオブジェクトであることを明示するための記法
+     */
     pub objects: Vec<Box<dyn Shape>>,
 }
 
@@ -149,15 +154,6 @@ impl Scene for SimpleScene {
         } else {
             self.background(ray.direction)
         }
-        // let c = Point3::new(0.0, 0.0, -1.0);
-        // let t = self.hit_sphere(c, 0.5, &ray);
-        // if t > 0.0 {
-        //     // 法線は(ヒットした地点 - 中心位置)で求まる
-        //     let n = (ray.at(t) - c).normalize();
-        //     // [-1~1]->[0~1]にremap
-        //     return 0.5 * (n + Vec3::one());
-        // }
-        // self.background(ray.direction)
     }
 }
 pub fn run() {
