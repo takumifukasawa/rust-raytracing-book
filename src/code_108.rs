@@ -159,5 +159,6 @@ impl Scene for SimpleScene {
     }
 }
 pub fn run() {
-    render(SimpleScene::new());
+    // render(SimpleScene::new());
+    render_aa(SimpleScene::new());
 }
