@@ -11,7 +11,9 @@ const BACKUP_FILENAME: &str = "render_bak.png";
 
 const IMAGE_WIDTH: u32 = 200;
 const IMAGE_HEIGHT: u32 = 100;
+
 const SAMPLES_PER_PIXEL: usize = 8;
+const GAMMA_FACTOR: f64 = 2.2;
 
 fn backup() {
     let output_path = Path::new(OUTPUT_FILENAME);
@@ -61,7 +63,8 @@ pub fn render_aa(scene: impl Scene + Sync) {
                 acc + scene.trace(ray)
             });
             pixel_color /= scene.spp() as f64;
-            let rgb = pixel_color.to_rgb();
+            // let rgb = pixel_color.to_rgb();
+            let rgb = pixel_color.gamma(GAMMA_FACTOR).to_rgb();
             pixel[0] = rgb[0];
             pixel[1] = rgb[1];
             pixel[2] = rgb[2];
