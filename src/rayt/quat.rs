@@ -3,7 +3,6 @@ use crate::rayt::*;
 pub struct Quat(Vec3, f64);
 
 impl Quat {
-
     pub const fn new(x: f64, y: f64, z: f64, w: f64) -> Self {
         Quat(Vec3::new(x, y, z), w)
     }
@@ -17,15 +16,20 @@ impl Quat {
         let (s, c) = (rad * 0.5).sin_cos();
         Quat::new(s, 0.0, 0.0, c)
     }
+    // /// Construct y-axis rotation
+    // pub fn from_rot_y(rad: f64) -> Self {
+    //     let (s, c) = (rad * 0.5).sin_cos();
+    //     Quat::new(0.0, s, 0.0, c)
+    // }
 
     pub fn from_rot_y(rad: f64) -> Self {
         let (s, c) = (rad * 0.5).sin_cos();
-        Quat::new(0.0, s, 0.0, c);
+        Quat::new(0.0, s, 0.0, c)
     }
 
     pub fn from_rot_z(rad: f64) -> Self {
         let (s, c) = (rad * 0.5).sin_cos();
-        Quat::new(0.0, 0.0, s, c);
+        Quat::new(0.0, 0.0, s, c)
     }
 
     pub const fn unit() -> Self {
@@ -75,10 +79,9 @@ impl Quat {
             ((w * z1 + z * w1) - x * x1) + y * x1,
         )
     }
-
 }
 
-impl std::opts::Mul<Quat> for Quat {
+impl std::ops::Mul<Quat> for Quat {
     type Output = Self;
     fn mul(self, rhs: Quat) -> Self {
         let [x1, y1, z1, w1] = self.to_array();
@@ -87,7 +90,7 @@ impl std::opts::Mul<Quat> for Quat {
             w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2,
             w1 * y2 + y2 * w2 + z1 * x2 - x1 * z2,
             w1 * z2 + z1 * w2 + x1 * y2 - y1 * x2,
-            w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2
+            w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2,
         )
     }
 }
