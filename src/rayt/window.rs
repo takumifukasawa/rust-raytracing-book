@@ -1,8 +1,10 @@
-use minifb::{Key, KeyRepeat, Window, WindowOptions};
 use image::RgbImage;
+use minifb::{Key, KeyRepeat, Window, WindowOptions};
 
 pub fn draw_in_window(backup_filename: &str, pixels: RgbImage) -> minifb::Result<()> {
-    if cfg!(test) { return Ok(()) }
+    if cfg!(test) {
+        return Ok(());
+    }
     let (image_width, image_height) = pixels.dimensions();
     let mut buffer: Vec<u32> = vec![0; (image_width * image_height) as usize];
     let mut window = Window::new(
@@ -52,11 +54,7 @@ pub fn draw_in_window(backup_filename: &str, pixels: RgbImage) -> minifb::Result
                 current_buffer = x;
             }
         }
-        window.update_with_buffer(
-            current_buffer,
-            image_width as usize,
-            image_height as usize
-        )?;
+        window.update_with_buffer(current_buffer, image_width as usize, image_height as usize)?;
     }
 
     Ok(())

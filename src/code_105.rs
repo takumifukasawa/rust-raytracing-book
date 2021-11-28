@@ -23,35 +23,35 @@ fn backup() {
 fn hit_sphere(center: Point3, radius: f64, ray: &Ray) -> f64 {
     /*
      * x^2 + y^2 + z^2 = r^2;
-     * 
+     *
      * // 中心位置をcx,cy,czとすると
      * (x - cx)^2 + (y - cy)^2 + (z - cz)^2 = r^2
-     * 
+     *
      * // 位置をx,y,zとすると
      * (px - cx)^2 + (pz - cy)^2 + (pz - cz)^2 = r^2
      * a: (p - c)^2 = r^2
-     * 
+     *
      * // rayの方程式
      * p(t) = o + td;
-     * 
+     *
      * // a に代入
      * (p(t) - c)^2 = r^2
      * (o + td - c)^2 = r^2
-     * 
+     *
      * oc = o - cとすると
      * (oc + td)^2 = r^2
      * (oc + td)^2 - r^2 = 0
-     * 
+     *
      * tについて展開
      * (d*d)t^2 + 2(d + oc)t + (oc)^2 - r^2 = 0
-     * 
+     *
      * ax^2 + bx + c = 0 の二次方程式に判別式Dを当てはめると、
-     * 
+     *
      * D = b^2 - 4ac
      * a = (d * d)
      * b = 2(d + oc)
      * c = (oc)^2 - r^2 = (o - c)^2 - r^2
-     * 
+     *
      */
     // a = d dot d
     // b = 2 * (d dot (o - c))
