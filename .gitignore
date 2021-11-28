@@ -15,3 +15,4 @@ Cargo.lock
 
 # project ignore files
 render.ppm
+render.png
