@@ -190,6 +190,30 @@ impl Float3 {
     pub fn degamma(&self, factor: f64) -> Self {
         Self::from_iter(self.0.iter().map(|x| x.powf(factor)))
     }
+
+    /*
+     *        \    |n   /|       
+     *         \   |  r/ |        
+     *        v \  |  /  |b       
+     *           \ | /   |        
+     *            \|/    |        
+     * --------------------------
+     *              \    |       
+     *               \   |       
+     *               v\  |b      
+     *                 \ |       
+     *                  \| 
+     * 
+     * rが反射ベクトル
+     * 
+     * r = v + 2b
+     * b = -(v dot n) * n
+     * 
+     * r = v + -2 * (v dot n) * n
+     */
+    pub fn reflect(&self, normal: Self) -> Self {
+        *self - 2.0 * self.dot(normal) * normal
+    }
 }
 
 impl std::ops::Neg for Float3 {
