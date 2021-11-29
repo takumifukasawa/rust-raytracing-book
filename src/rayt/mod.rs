@@ -21,6 +21,9 @@ pub use self::ray::Ray;
 pub use self::render::*;
 pub use self::window::*;
 
+// スレッド間で所有権を共有できる？
+pub use std::sync::Arc;
+
 pub use std::f64::consts::FRAC_1_PI;
 pub use std::f64::consts::PI;
 pub const PI2: f64 = PI * 2.0;
