@@ -214,6 +214,33 @@ impl Float3 {
     pub fn reflect(&self, normal: Self) -> Self {
         *self - 2.0 * self.dot(normal) * normal
     }
+
+    /**
+     * ref:
+     * https://qiita.com/mebiusbox2/items/315e10031d15173f0aa5
+     *
+     * スネルの法則 
+     * n1sinΘ1 = n2sinΘ2
+     */
+    pub fn refract(&self, normal: Self, ni_over_nt: f64) -> Option<Float3> {
+        let uv = self.normalize();
+        let dt = uv.dot(normal);
+        /* d: 判別式
+         * スネルの法則を置き換える
+         * sinΘ2 = (n1 / n2)sinΘ1
+         * Θ1 = 0~90 なので sinΘ1 = 0~90
+         * n1 < n2 ... sinΘ2 = 0~1
+         * n1 > n2 ... (n1 / n2) > 1 なので sinΘ1 が大きい場合に sinΘ2 > 1 になってしまう
+         *  => 屈折光がなくなり反射光だけになる = 全反射
+         * 屈折をする媒質を誘導体と呼ぶ
+         */
+        let d = 1.0 - ni_over_nt.powi(2) * (1.0 - dt.powi(2));
+        if d > 0.0 {
+            Some(-ni_over_nt * (uv - normal * dt) - normal * d.sqrt())
+        } else {
+            None
+        }
+    }
 }
 
 impl std::ops::Neg for Float3 {

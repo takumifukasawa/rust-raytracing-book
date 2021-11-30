@@ -1,3 +1,4 @@
+
 use crate::rayt::*;
 
 struct HitInfo {
@@ -44,6 +45,16 @@ struct Metal {
     fuzz: f64
 }
 
+struct Dielectic {
+    ri: f64
+}
+
+impl Dielectic {
+    const fn new (ri: f64) -> Self {
+        Self { ri }
+    }
+}
+
 impl Metal {
     fn new(albedo: Color, fuzz: f64) -> Self {
         Self { albedo, fuzz }
@@ -66,6 +77,24 @@ impl Material for Metal {
             Some(ScatterInfo::new(Ray::new(hit.p, reflected), self.albedo))
         } else {
             None
+        }
+    }
+}
+
+impl Material for Dielectic {
+    fn scatter(&self, ray: &Ray, hit: &HitInfo) -> Option<ScatterInfo> {
+        let reflected = ray.direction.reflect(hit.n);
+        let (outward_normal, ni_over_nt) = {
+            if ray.direction.dot(hit.n) > 0.0 {
+                (-hit.n, self.ri)
+            } else {
+                (hit.n, self.ri.recip())
+            }
+        };
+        if let Some(refracted) = (-ray.direction).refract(outward_normal, ni_over_nt) {
+            Some(ScatterInfo::new(Ray::new(hit.p, refracted), Color::one()))
+        } else {
+            Some(ScatterInfo::new(Ray::new(hit.p, reflected), Color::one()))
         }
     }
 }
@@ -207,7 +236,12 @@ impl SimpleScene {
         world.push(Box::new(Sphere::new(
             Point3::new(-0.6, 0.0, -1.0),
             0.5,
-            Arc::new(Metal::new(Color::new(0.8, 0.8, 0.8), 1.0))
+            Arc::new(Dielectic::new(1.5))
+        )));
+        world.push(Box::new(Sphere::new(
+            Point3::new(-0.0, -0.35, -0.8),
+            0.15,
+            Arc::new(Metal::new(Color::new(0.8, 0.8, 0.8), 0.2))
         )));
         world.push(Box::new(Sphere::new(
             Point3::new(0.0, -100.5, -1.0),
@@ -249,5 +283,4 @@ pub fn run() {
     // render(SimpleScene::new());
     render_aa_with_depth(SimpleScene::new());
 }
-
 
