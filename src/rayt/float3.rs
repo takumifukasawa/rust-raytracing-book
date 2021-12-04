@@ -241,6 +241,15 @@ impl Float3 {
             None
         }
     }
+
+    // 半球上の無作為な方向
+    pub fn random_cosine_direction() -> Self {
+        let Self([r1, r2, _]) = Self::random();
+        let z = (1.0 - r2).sqrt();
+        let (x, y) = (PI2 * r1).sin_cos();
+        let r2sqrt = r2.sqrt();
+        Self::new(x * r2sqrt, y * r2sqrt, z)
+    }
 }
 
 impl std::ops::Neg for Float3 {

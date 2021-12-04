@@ -11,6 +11,7 @@ mod quat;
 mod ray;
 mod render;
 mod window;
+mod onb;
 
 // export modules
 pub use self::float3::{Color, Float3, Point3, Vec3};
@@ -20,6 +21,7 @@ pub use self::quat::Quat;
 pub use self::ray::Ray;
 pub use self::render::*;
 pub use self::window::*;
+pub use self::onb::ONB;
 
 // スレッド間で所有権を共有できる？
 pub use std::sync::Arc;
