@@ -69,7 +69,7 @@ pub fn render_aa_with_depth(scene: impl SceneWidthDepth + Sync) {
     //     Vec3::new(-2.0, -1.0, -1.0),
     // );
     let camera = scene.camera();
-    let mut img = RgbImage::new(IMAGE_WIDTH, IMAGE_HEIGHT);
+    let mut img = RgbImage::new(scene.width(), scene.height());
     img.enumerate_pixels_mut()
         .collect::<Vec<(u32, u32, &mut Rgb<u8>)>>()
         .par_iter_mut()
@@ -106,7 +106,7 @@ pub fn render_aa(scene: impl Scene + Sync) {
     //     Vec3::new(-2.0, -1.0, -1.0),
     // );
     let camera = scene.camera();
-    let mut img = RgbImage::new(IMAGE_WIDTH, IMAGE_HEIGHT);
+    let mut img = RgbImage::new(scene.width(), scene.height());
     img.enumerate_pixels_mut()
         .collect::<Vec<(u32, u32, &mut Rgb<u8>)>>()
         .par_iter_mut()
@@ -142,14 +142,14 @@ pub fn render(scene: impl Scene + Sync) {
     //     Vec3::new(-2.0, -1.0, -1.0),
     // );
     let camera = scene.camera();
-    let mut img = RgbImage::new(IMAGE_WIDTH, IMAGE_HEIGHT);
+    let mut img = RgbImage::new(scene.width(), scene.height());
     img.enumerate_pixels_mut()
         .collect::<Vec<(u32, u32, &mut Rgb<u8>)>>()
         .par_iter_mut()
         .for_each(|(x, y, pixel)| {
-            let u = *x as f64 / (IMAGE_WIDTH - 1) as f64;
+            let u = *x as f64 / (scene.width() - 1) as f64;
             // x,yは左上から。座標系は右上に上がっていくのでyを反転
-            let v = (IMAGE_HEIGHT - *y - 1) as f64 / (IMAGE_HEIGHT - 1) as f64;
+            let v = (scene.height() - *y - 1) as f64 / (scene.height() - 1) as f64;
             let ray = camera.ray(u, v);
             let rgb = scene.trace(ray).to_rgb();
             pixel[0] = rgb[0];
