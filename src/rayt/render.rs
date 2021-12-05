@@ -12,7 +12,7 @@ const BACKUP_FILENAME: &str = "render_bak.png";
 const IMAGE_WIDTH: u32 = 200;
 const IMAGE_HEIGHT: u32 = 100;
 
-const SAMPLES_PER_PIXEL: usize = 100;
+const SAMPLES_PER_PIXEL: usize = 50;
 const GAMMA_FACTOR: f64 = 2.2;
 
 fn backup() {
