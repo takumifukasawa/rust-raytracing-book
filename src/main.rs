@@ -36,6 +36,7 @@ mod code_306;
 mod code_307;
 mod code_308;
 mod code_309;
+mod code_310;
 
 fn run(id: &str) {
     match id {
@@ -75,6 +76,7 @@ fn run(id: &str) {
         "307" => code_307::run(),
         "308" => code_308::run(),
         "309" => code_309::run(),
+        "310" => code_310::run(),
         _ => println!("not found code_{}", id),
     }
 }
